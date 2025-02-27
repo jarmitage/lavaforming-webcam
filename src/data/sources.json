@@ -1,0 +1,28 @@
+{
+  "streams": [
+    {
+      "id": "faH3xrKyP_o",
+      "title": "Reykjanes Peninsula - View 1",
+      "description": "Live stream of volcanic activity",
+      "position": 0
+    },
+    {
+      "id": "k6LgRBuNNns",
+      "title": "Reykjanes Peninsula - View 2",
+      "description": "Thermal camera view",
+      "position": 1
+    },
+    {
+      "id": "kXD4A9uFHcg",
+      "title": "Reykjanes Peninsula - View 3",
+      "description": "Seismic activity area",
+      "position": 2
+    },
+    {
+      "id": "tB7vWbqRC5k",
+      "title": "Reykjanes Peninsula - View 4",
+      "description": "Overview camera",
+      "position": 3
+    }
+  ]
+} 
