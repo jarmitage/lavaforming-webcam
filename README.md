@@ -12,13 +12,10 @@ It displays a live webcam multiview with four video livestreams of Reykjanes pen
 - [x] Simple React web app boilerplate using Vite + TypeScript
 - [x] `sources.json` file where the user can input YouTube live stream IDs
 - [x] Displaying the four YouTube video players in a grid filling the entire screen
-  - Full-screen 2x2 grid layout
-  - Auto-playing, muted video streams
-  - Clean overlay for stream information
-  - Responsive design that fills the viewport
 
 ### Todo
 - [ ] Additional layer on top of the videos where data viz and graphics can be overlaid
+- [ ] Scraping earthquake data https://github.com/topics/scraper
 
 ## Setup and Usage
 
