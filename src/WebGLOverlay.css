@@ -1,0 +1,57 @@
+/* Styles for the main container holding the canvas and controls */
+.webgl-overlay-container {
+    position: absolute; /* Position absolutely to overlay the parent */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow clicks to pass through the container initially */
+    z-index: 10; /* Ensure it sits on top of other content */
+    display: flex; /* Use flexbox to potentially position controls */
+    flex-direction: column; /* Stack canvas and controls vertically */
+    justify-content: flex-end; /* Place controls at the bottom */
+    align-items: center; /* Center controls horizontally */
+}
+
+/* Styles for the WebGL canvas itself */
+.webgl-canvas {
+    position: absolute; /* Position absolutely within its container */
+    top: 0;
+    left: 0;
+    width: 100%; /* Take full width of container */
+    height: 100%; /* Take full height of container */
+    background: transparent; /* Ensure canvas background is transparent */
+    /* pointer-events: none; */ /* Canvas itself doesn't need pointer-events none if container has it */
+}
+
+/* Styles for the optional controls container */
+.webgl-controls {
+    position: relative; /* Position relative to the container flow */
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 5px;
+    margin-bottom: 20px; /* Spacing from the bottom edge */
+    pointer-events: auto; /* Make controls interactive */
+    display: flex;
+    gap: 15px; /* Spacing between controls */
+    align-items: center;
+    z-index: 11; /* Ensure controls are above the canvas if overlapping needed, though container positioning should handle it*/
+}
+
+.webgl-controls label {
+    color: white;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.webgl-controls input[type="range"] {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.webgl-controls span {
+    min-width: 35px; /* Ensure consistent width for percentage/value display */
+    text-align: right;
+} 
