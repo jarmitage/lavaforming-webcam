@@ -17,14 +17,17 @@
 }
 
 .youtubePlayer { /* Renamed from youtube-player for JS access */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
+  position: relative; /* Change from absolute to relative */
+  width: 100%; /* Keep width 100% */
+  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+  height: 0; /* Height is controlled by padding-top */
+  overflow: hidden; /* Hide anything outside the aspect ratio box */
 }
 
 .youtubePlayer iframe {
+  position: absolute; /* Position the iframe absolutely within the container */
+  top: 0;
+  left: 0;
   width: 100% !important;
   height: 100% !important;
 }

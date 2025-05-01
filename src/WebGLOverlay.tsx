@@ -66,8 +66,10 @@ const WebGLOverlay: React.FC = () => {
     const vertexShaderRef = useRef<WebGLShader | null>(null); // Store shader refs for cleanup
     const fragmentShaderRef = useRef<WebGLShader | null>(null);
 
-    const [opacity, setOpacity] = useState(0.7); // Default opacity
-    const [speed, setSpeed] = useState(5); // Default speed
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [opacity, _setOpacity] = useState(0.7); // Default opacity
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [speed, _setSpeed] = useState(5); // Default speed
 
     // --- WebGL Initialization and Render Loop Effect ---
     useEffect(() => {
