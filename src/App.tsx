@@ -11,9 +11,9 @@ import './styles/App.css'
 import LiveGrid from './LiveGrid'
 import ArchiveEruption from './ArchiveEruption'
 
-const NAVIGATION_INTERVAL = 10000 // 10 seconds
-const RELOAD_INTERVAL = 30000 // 30 seconds
-const DEBUG_LOG_INTERVAL = 3000 // 3 seconds
+const NAVIGATION_INTERVAL = 300000 // 5 minutes
+const RELOAD_INTERVAL = 600000 // 10 minutes
+const DEBUG_LOG_INTERVAL = 30000 // 30 seconds
 
 function NavigationHandler() {
   const navigate = useNavigate()
@@ -40,10 +40,11 @@ function App() {
   useEffect(() => {
     // --- Reload Timer ---
     const reloadTimerId = setInterval(() => {
-      console.log('Triggering hard refresh...')
+      console.log('Triggering hard refresh to base route...')
       // Update timestamp for the *next* reload before reloading
       nextReloadTimestamp.current = Date.now() + RELOAD_INTERVAL
-      window.location.reload()
+      // Navigate to the base route instead of just reloading
+      window.location.href = '/lavaforming-webcam/';
     }, RELOAD_INTERVAL)
 
     // --- Countdown Log Timer ---
