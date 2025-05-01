@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './WebGLOverlay.css'; // We will create this file in the next step
+import './styles/WebGLOverlay.css'; // Updated path
 
 const vsSource = `
     attribute vec4 aVertexPosition;
@@ -263,7 +263,7 @@ const WebGLOverlay: React.FC = () => {
         <div className="webgl-overlay-container"> {/* Added a container div */}
             <canvas ref={canvasRef} className="webgl-canvas"></canvas>
             {/* Optional Controls - consider moving styling to CSS */}
-            <div className="webgl-controls">
+            {/* <div className="webgl-controls">
                 <label>
                     Opacity: <input type="range" min="0" max="1" step="0.01" value={opacity} onChange={(e) => setOpacity(parseFloat(e.target.value))} />
                     <span>{(opacity * 100).toFixed(0)}%</span>
@@ -272,7 +272,7 @@ const WebGLOverlay: React.FC = () => {
                     Speed: <input type="range" min="0" max="10" step="0.1" value={speed} onChange={(e) => setSpeed(parseFloat(e.target.value))} />
                     <span>{speed.toFixed(1)}</span>
                 </label>
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,0 +1,12 @@
+.youtubePlayer { /* Renamed from youtube-player for JS access */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.youtubePlayer iframe {
+  width: 100% !important;
+  height: 100% !important;
+} 
