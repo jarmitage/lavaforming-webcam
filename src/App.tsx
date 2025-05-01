@@ -1,47 +1,77 @@
-import { useState } from 'react'
-import YouTube from 'react-youtube' // Temporarily commented out
+import { useEffect, useRef } from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation
+} from 'react-router-dom'
 import './App.css'
-import sources from './data/sources.json' // Temporarily commented out
-import WebGLOverlay from './WebGLOverlay'
+
+import LiveGrid from './LiveGrid'
+import ArchiveEruption from './ArchiveEruption'
+
+const NAVIGATION_INTERVAL = 10000 // 10 seconds
+const RELOAD_INTERVAL = 30000 // 30 seconds
+const DEBUG_LOG_INTERVAL = 3000 // 3 seconds
+
+function NavigationHandler() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const nextPath = location.pathname === '/livegrid' ? '/archiveeruption' : '/livegrid'
+      console.log(`Navigating to ${nextPath}`)
+      navigate(nextPath)
+    }, NAVIGATION_INTERVAL)
+
+    return () => clearInterval(intervalId)
+  }, [location.pathname, navigate])
+
+  return null
+}
 
 function App() {
-  const [streams] = useState(sources.streams) // Temporarily commented out
+  // Ref to store the timestamp of the next scheduled reload
+  const nextReloadTimestamp = useRef<number>(Date.now() + RELOAD_INTERVAL)
 
-  const opts = {
-    width: '100%',
-    height: '100%',
-    playerVars: {
-      autoplay: 1,
-      mute: 1,
-      controls: 0,
-      modestbranding: 1,
-      rel: 0,
-      showinfo: 0,
-      loop: 1
+  // Effect for periodic hard refresh and countdown logging
+  useEffect(() => {
+    // --- Reload Timer ---
+    const reloadTimerId = setInterval(() => {
+      console.log('Triggering hard refresh...')
+      // Update timestamp for the *next* reload before reloading
+      nextReloadTimestamp.current = Date.now() + RELOAD_INTERVAL
+      window.location.reload()
+    }, RELOAD_INTERVAL)
+
+    // --- Countdown Log Timer ---
+    const logTimerId = setInterval(() => {
+      const remainingMs = nextReloadTimestamp.current - Date.now()
+      // Ensure we don't log negative numbers if timers are slightly off
+      const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000))
+      console.log(`[Debug] Hard refresh in approx. ${remainingSeconds} seconds.`)
+    }, DEBUG_LOG_INTERVAL)
+
+    // Cleanup timers on component unmount
+    return () => {
+      clearInterval(reloadTimerId)
+      clearInterval(logTimerId)
     }
-  }
+  }, []) // Empty dependency array ensures this runs only once on mount
 
   return (
-    <div className="app">
-      {/* Content container */}
-      <div className="grid">
-        {streams.map((stream) => (
-          <div key={stream.id} className="stream-container">
-            <YouTube
-              videoId={stream.id}
-              opts={opts}
-              className="youtube-player"
-            />
-            <div className="stream-info">
-              <h3>{stream.title}</h3>
-              <p>{stream.description}</p>
-            </div>
-          </div>
-        ))}
+    <Router basename="/lavaforming-webcam">
+      <div className="app">
+        <Routes>
+          <Route path="/livegrid" element={<LiveGrid />} />
+          <Route path="/archiveeruption" element={<ArchiveEruption />} />
+          <Route path="/" element={<LiveGrid />} />
+        </Routes>
+        <NavigationHandler />
       </div>
-      {/* WebGL Overlay Component - renders on top */}
-      <WebGLOverlay />
-    </div>
+    </Router>
   )
 }
 
