@@ -1,10 +1,9 @@
 import YouTube from 'react-youtube'
-import sources from './data/sources.json'
-import { useState } from 'react';
 import styles from './styles/ArchiveEruption.module.css';
 
+const id = 'qkk-zwMQiBc'
+
 function ArchiveEruption() {
-  const [streams] = useState(sources.streams)
 
   const opts = {
     width: '100%',
@@ -24,7 +23,7 @@ function ArchiveEruption() {
     <div>
       <h1>Archive Eruption Page</h1>
       <YouTube
-        videoId={streams[0].id}
+        videoId={id}
         opts={opts}
         className={styles.youtubePlayer}
       />
