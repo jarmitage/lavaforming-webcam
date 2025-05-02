@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import YouTube from 'react-youtube'
 import sources from './data/sources.json'
-import WebGLOverlay from './WebGLOverlay'
+// import WebGLOverlay from './WebGLOverlay'
 import styles from './styles/LiveGrid.module.css'
 import './styles/App.css'
 
@@ -90,13 +90,13 @@ function LiveGrid() {
             opts={opts}
             className={styles.youtubePlayer}
           />
-          <div className={styles.streamInfo}>
+          {/* <div className={styles.streamInfo}>
             <h3>{stream.title}</h3>
             <p>{stream.description}</p>
-          </div>
+          </div> */}
         </div>
       ))}
-      <WebGLOverlay />
+      {/* <WebGLOverlay /> */}
     </div>
   )
 }
