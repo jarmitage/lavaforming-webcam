@@ -11,22 +11,39 @@ import './styles/App.css'
 import LiveGrid from './LiveGrid'
 import ArchiveEruption from './ArchiveEruption'
 
-const NAVIGATION_INTERVAL = 300000 // 5 minutes
+const NAVIGATION_INTERVAL = 30000 // 30 seconds
+const NAVIGATION_DEBUG_LOG_INTERVAL = 3000 // 3 seconds
 const RELOAD_INTERVAL = 600000 // 10 minutes
-const DEBUG_LOG_INTERVAL = 30000 // 30 seconds
+const RELOAD_DEBUG_LOG_INTERVAL = 30000 // 30 seconds
 
 function NavigationHandler() {
   const navigate = useNavigate()
   const location = useLocation()
+  // Ref to store the timestamp of the next scheduled navigation
+  const nextNavigationTimestamp = useRef<number>(Date.now() + NAVIGATION_INTERVAL)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       const nextPath = location.pathname === '/livegrid' ? '/archiveeruption' : '/livegrid'
       console.log(`Navigating to ${nextPath}`)
+      // Update timestamp for the *next* navigation before navigating
+      nextNavigationTimestamp.current = Date.now() + NAVIGATION_INTERVAL
       navigate(nextPath)
     }, NAVIGATION_INTERVAL)
 
-    return () => clearInterval(intervalId)
+    // --- Navigation Debug Log Timer ---
+    const navigationDebugLogTimerId = setInterval(() => {
+      const nextPath = location.pathname === '/livegrid' ? '/archiveeruption' : '/livegrid'
+      // Calculate remaining time
+      const remainingMs = nextNavigationTimestamp.current - Date.now()
+      const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000))
+      console.log(`[Debug] Navigating to ${nextPath} in approx. ${remainingSeconds} seconds.`)
+    }, NAVIGATION_DEBUG_LOG_INTERVAL)
+
+    return () => {
+      clearInterval(intervalId)
+      clearInterval(navigationDebugLogTimerId)
+    }
   }, [location.pathname, navigate])
 
   return null
@@ -53,7 +70,7 @@ function App() {
       // Ensure we don't log negative numbers if timers are slightly off
       const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000))
       console.log(`[Debug] Hard refresh in approx. ${remainingSeconds} seconds.`)
-    }, DEBUG_LOG_INTERVAL)
+    }, RELOAD_DEBUG_LOG_INTERVAL)
 
     // Cleanup timers on component unmount
     return () => {
