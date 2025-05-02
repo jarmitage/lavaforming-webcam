@@ -11,7 +11,7 @@ import './styles/App.css'
 import LiveGrid from './LiveGrid'
 import ArchiveEruption from './ArchiveEruption'
 
-const NAVIGATION_INTERVAL = 30000 // 30 seconds
+const NAVIGATION_INTERVAL = 300000 // 5 minutes
 const NAVIGATION_DEBUG_LOG_INTERVAL = 3000 // 3 seconds
 const RELOAD_INTERVAL = 600000 // 10 minutes
 const RELOAD_DEBUG_LOG_INTERVAL = 30000 // 30 seconds
@@ -24,7 +24,9 @@ function NavigationHandler() {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const nextPath = location.pathname === '/livegrid' ? '/archiveeruption' : '/livegrid'
+      // Treat '/' and '/livegrid' the same for deciding the next path
+      const isLiveGridEquivalent = location.pathname === '/livegrid' || location.pathname === '/';
+      const nextPath = isLiveGridEquivalent ? '/archiveeruption' : '/livegrid'
       console.log(`Navigating to ${nextPath}`)
       // Update timestamp for the *next* navigation before navigating
       nextNavigationTimestamp.current = Date.now() + NAVIGATION_INTERVAL
@@ -33,7 +35,9 @@ function NavigationHandler() {
 
     // --- Navigation Debug Log Timer ---
     const navigationDebugLogTimerId = setInterval(() => {
-      const nextPath = location.pathname === '/livegrid' ? '/archiveeruption' : '/livegrid'
+      // Treat '/' and '/livegrid' the same for deciding the next path for logging
+      const isLiveGridEquivalent = location.pathname === '/livegrid' || location.pathname === '/';
+      const nextPath = isLiveGridEquivalent ? '/archiveeruption' : '/livegrid'
       // Calculate remaining time
       const remainingMs = nextNavigationTimestamp.current - Date.now()
       const remainingSeconds = Math.max(0, Math.round(remainingMs / 1000))
